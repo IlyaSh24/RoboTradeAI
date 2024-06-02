@@ -1,6 +1,6 @@
 const fs = require('fs');
 const TelegramBot = require('node-telegram-bot-api');
-const request = require('request');
+const Sequelize = require('sequelize');
 const answers = require('./answers');
 const express = require('express');
 const app = express();
@@ -15,6 +15,17 @@ app.get('/pocketoption', pocketOptionController.pocketEventReceived);
 app.get('/trader/:id', pocketOptionController.getTrader);
 
 app.listen(port, () => console.log('Server is listening on port: 1338'));
+
+const sequelize = new Sequelize({
+    dialect: 'sqlite',
+    storage: 'robotradeai.db'
+});
+
+sequelize.sync({force: true})
+    .then(result => {
+        console.log('Synchronized successfully!');
+    })
+    .catch(err => console.log(`Error sync: ${err}`));
 
 const bot = new TelegramBot(process.env.API_KEY, {
     polling: true
