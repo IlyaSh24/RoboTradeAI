@@ -5,21 +5,15 @@ const answers = require('./answers');
 const express = require('express');
 const app = express();
 const pocketOptionController = require('./controllers/pocketOptionController');
+const sequelize = require('./models/config');
 require('dotenv').config();
 
-const host = process.env.BASE_ADDRESS || 'http://95.142.47.64';
 const port = process.env.EXPRESS_PORT || 1338;
-const address = `${host}:${port}`;
 
 app.get('/pocketoption', pocketOptionController.pocketEventReceived);
 app.get('/trader/:id', pocketOptionController.getTrader);
 
 app.listen(port, () => console.log('Server is listening on port: 1338'));
-
-const sequelize = new Sequelize({
-    dialect: 'sqlite',
-    storage: 'robotradeai.db'
-});
 
 sequelize.sync({force: true})
     .then(result => {

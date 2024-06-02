@@ -1,4 +1,4 @@
-const sequelize = require('sequelize');
+const sequelize = require('./config');
 
 module.exports = sequelize.define('trader', {
     id: {
