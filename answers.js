@@ -49,10 +49,45 @@ const sendFreePurchaseNotRussia = async (bot, msg) => {
         '🤖 4. Our manager will check compliance with the conditions and send you a robot\n\n' + 
         '👉 Register link: <a href="https://pocket1.click/smart/4jlv8RwNpcPNtF">Go and register</a>\n\n' +
         '💡💡💡 <i>Advice: We highly recommend to top up your account with <b>200$</b></i>', {
-            parse_mode: 'HTML'
+            parse_mode: 'HTML',
+            reply_markup: {
+                keyboard: [
+                    ['🔎 Check my profile ID']
+                ],
+                one_time_keyboard: true
+            }
         }
     );
     await bot.sendPhoto(msg.chat.id, './images/profile-id.png');
+};
+
+const sendCheckProfileID = async (bot, msg) => {
+    await bot.sendMessage(msg.chat.id, 'Send your profile ID here in the following format: <b>ID: [your profile ID]</b>', {
+        parse_mode: 'HTML'
+    });
+};
+
+const sendCheckProfileIDRussian = async (bot, msg) => {
+    await bot.sendMessage(msg.chat.id, 'Отправьте в сообщении ваш ID профиля в следующем формате: <b>ID: [ID вашего профиля]</b>', {
+        parse_mode: 'HTML'
+    });
+}
+
+const sendProfileIDIncorrectFormat = async (bot, msg) => {
+    await bot.sendMessage(msg.chat.id, 'Please, enter your ID in the correct format');
+};
+
+const sendPersonalRobot = async (bot, msg) => {
+    const profileId = msg.text.match(/\d+/);
+    request(`${address}/trader/${profileId}`, async (err, response, body) => {
+        const traderFound = body.result;
+        if (traderFound) {
+            await bot.sendMessage(msg.chat.id, 'Your account was found');
+        }
+        else {
+            await bot.sendMessage(msg.chat.id, 'Your account was not found');
+        }
+    });
 };
 
 const sendFreePurchaseRussia = async (bot, msg) => {
@@ -64,7 +99,12 @@ const sendFreePurchaseRussia = async (bot, msg) => {
         '🤖 4. Наш менеджер проверит соблюдение условий и отправит Вам робота\n\n' + 
         '👉 Ссылка для регистрации: <a href="https://po-ru.click/smart/4jlv8RwNpcPNtF">Перейти и зарегистрироваться</a>\n\n' +
         '💡💡💡 <i>Совет: Мы настоятельно рекомендуем пополнять аккаунт на сумму от <b>200$</b></i>', {
-            parse_mode: 'HTML'
+            parse_mode: 'HTML',
+            reply_markup: {
+                keyboard: [
+                    ['🔎 Проверить ID профиля']
+                ]
+            }
         }
     );
     await bot.sendPhoto(msg.chat.id, './images/profile-id.png');
@@ -200,6 +240,10 @@ module.exports = {
     sendPurchaseMethod, 
     sendFreePurchaseCountry,
     sendFreePurchaseNotRussia,
+    sendCheckProfileID,
+    sendCheckProfileIDRussian,
+    sendProfileIDIncorrectFormat,
+    sendPersonalRobot,
     sendFreePurchaseRussia,
     sendPaidPurchaseMethod,
     sendPaidPurchaseByBitcoin,

@@ -2,8 +2,19 @@ const fs = require('fs');
 const TelegramBot = require('node-telegram-bot-api');
 const request = require('request');
 const answers = require('./answers');
-
+const express = require('express');
+const app = express();
+const pocketOptionController = require('./controllers/pocketOptionController');
 require('dotenv').config();
+
+const host = process.env.BASE_ADDRESS || 'http://95.142.47.64';
+const port = process.env.EXPRESS_PORT || 1338;
+const address = `${host}:${port}`;
+
+app.get('/pocketoption', pocketOptionController.pocketEventReceived);
+app.get('/trader/:id', pocketOptionController.getTrader);
+
+app.listen(port, () => console.log('Server is listening on port: 1338'));
 
 const bot = new TelegramBot(process.env.API_KEY, {
     polling: true
@@ -31,6 +42,12 @@ bot.on('text', async msg => {
         else if (msg.text === '/contact') {
             answers.sendManagerContact(bot, msg);
         }
+        else if (msg.text.match(/ID: \d+/)) {
+            answers.sendPersonalRobot(bot, msg);
+        }
+        else if (msg.text.includes("ID:")) {
+            answers.sendProfileIDIncorrectFormat(bot, msg);
+        }
         else if (msg.text === '🤖 Get robot') {
             answers.sendPurchaseMethod(bot, msg);
         }
@@ -42,6 +59,12 @@ bot.on('text', async msg => {
         }
         else if (msg.text === 'Russia') {
             answers.sendFreePurchaseRussia(bot, msg);
+        }
+        else if (msg.text === '🔎 Check my profile ID') {
+            answers.sendCheckProfileID(bot, msg);
+        }
+        else if (msg.text === '🔎 Проверить ID профиля') {
+            answers.sendCheckProfileIDRussian(bot, msg);
         }
         else if (msg.text === '💳 Paid') {
             answers.sendPaidPurchaseMethod(bot, msg);
