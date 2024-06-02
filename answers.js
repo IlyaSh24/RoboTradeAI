@@ -114,7 +114,7 @@ const sendPersonalRobot = async (bot, msg) => {
                 });
             }
             else {
-                await bot.sendMessage(msg.chat.id, '😕 Your profile ID is not found. If you are sure that you registered <b>correctly<b>, please, contact our manager 👉 <i>@robotradeaioff</i>', {
+                await bot.sendMessage(msg.chat.id, '😕 Your profile ID is not found. If you are sure that you registered <b>correctly</b>, please, contact our manager 👉 <i>@robotradeaioff</i>', {
                     parse_mode: 'HTML'
                 });
             }

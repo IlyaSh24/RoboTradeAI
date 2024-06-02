@@ -15,11 +15,11 @@ app.get('/trader/:id', pocketOptionController.getTrader);
 
 app.listen(port, () => console.log('Server is listening on port: 1338'));
 
-// sequelize.sync({force: true})
-//     .then(result => {
-//         console.log('Synchronized successfully!');
-//     })
-//     .catch(err => console.log(`Error sync: ${err}`));
+sequelize.sync()
+    .then(result => {
+        console.log('Synchronized successfully!');
+    })
+    .catch(err => console.log(`Error sync: ${err}`));
 
 const bot = new TelegramBot(process.env.API_KEY, {
     polling: true
