@@ -1,4 +1,7 @@
 const request = require('request');
+const fs = require('fs');
+const fsExtra = require('fs-extra');
+const zipper = require('zip-local');
 
 const host = process.env.HOST || 'http://95.142.47.64';
 const port = process.env.PORT || 1338;
@@ -81,16 +84,47 @@ const sendProfileIDIncorrectFormat = async (bot, msg) => {
 };
 
 const sendPersonalRobot = async (bot, msg) => {
-    const profileId = msg.text.match(/\d+/);
-    request(`${host}:${port}/trader/${profileId}`, async (err, response, body) => {
-        const traderFound = body.result;
-        if (traderFound) {
-            await bot.sendMessage(msg.chat.id, 'Your account was found');
-        }
-        else {
-            await bot.sendMessage(msg.chat.id, 'Your account was not found');
-        }
-    });
+    try {
+        const profileId = msg.text.match(/\d+/);
+        request(`${host}:${port}/trader/${profileId}`, async (err, response, body) => {
+            const traderFound = body.result;
+            console.log(body);
+            if (traderFound) {
+                const robotJsFileContent = fs.readFileSync(__dirname + '/static/extension/robot.js')
+                const robotJsFileContentWithProfileId = robotJsFileContent.toString().replace('#PROFILE_ID_HERE#', profileId);
+                const traderDirPath = __dirname + '/static/traders/' + profileId;
+                if (!fs.existsSync(traderDirPath)) {
+                    fs.mkdirSync(traderDirPath);
+                }
+                fsExtra.copySync(__dirname + '/static/extension', traderDirPath);
+                // Replace content of robot.js (where checks)
+                fs.writeFileSync(traderDirPath + '/robot.js', robotJsFileContentWithProfileId);
+                // Compress and create zip file
+                zipper.sync.zip(traderDirPath).compress().save(traderDirPath + `/robot_${profileId}.zip`);
+                await bot.sendDocument(msg.chat.id, `${traderDirPath}/robot_${profileId}.zip`, {
+                    caption: '🔥 You extension is ready. Follow the instruction to install and use it'
+                });
+                await bot.sendMessage(msg.chat.id, '👇 Learn how to install the extension in the browser ', {
+                    reply_markup: {
+                        keyboard: [
+                            ['⚙️ How to install robot']
+                        ],
+                        one_time_keyboard: true
+                    }
+                });
+            }
+            else {
+                await bot.sendMessage(msg.chat.id, '😕 Your profile ID is not found. If you are sure that you registered <b>correctly<b>, please, contact our manager 👉 <i>@robotradeaioff</i>', {
+                    parse_mode: 'HTML'
+                });
+            }
+        });
+    }
+    catch (err) {
+        fs.appendFile(__dirname + "/error.log", err + '\n', (err) => {
+            console.log(err);
+        });
+    }
 };
 
 const sendFreePurchaseRussia = async (bot, msg) => {
