@@ -8,7 +8,7 @@ const pocketOptionController = require('./controllers/pocketOptionController');
 const sequelize = require('./models/config');
 require('dotenv').config();
 
-const port = process.env.EXPRESS_PORT || 1338;
+const port = process.env.PORT || 1338;
 
 app.get('/pocketoption', pocketOptionController.pocketEventReceived);
 app.get('/trader/:id', pocketOptionController.getTrader);

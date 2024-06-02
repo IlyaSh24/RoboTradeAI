@@ -1,5 +1,8 @@
 const request = require('request');
 
+const host = process.env.HOST || 'http://95.142.47.64';
+const port = process.env.PORT || 1338;
+
 // const sendGreet = async (bot, msg) => {
 //     await bot.sendMessage(msg.chat.id, `Hello, ${msg.from.first_name}`);
 // };
@@ -79,7 +82,7 @@ const sendProfileIDIncorrectFormat = async (bot, msg) => {
 
 const sendPersonalRobot = async (bot, msg) => {
     const profileId = msg.text.match(/\d+/);
-    request(`${address}/trader/${profileId}`, async (err, response, body) => {
+    request(`${host}:${port}/trader/${profileId}`, async (err, response, body) => {
         const traderFound = body.result;
         if (traderFound) {
             await bot.sendMessage(msg.chat.id, 'Your account was found');
