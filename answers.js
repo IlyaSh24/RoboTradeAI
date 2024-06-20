@@ -3,7 +3,7 @@ const fs = require('fs');
 const fsExtra = require('fs-extra');
 const zipper = require('zip-local');
 
-const host = process.env.HOST || 'http://95.142.47.64';
+const host = process.env.HOST || 'http://195.2.74.29';
 const port = process.env.PORT || 1338;
 
 // const sendGreet = async (bot, msg) => {
