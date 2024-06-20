@@ -47,7 +47,7 @@ bot.on('text', async msg => {
         else if (msg.text === '/contact') {
             answers.sendManagerContact(bot, msg);
         }
-        else if (msg.text.match(/ID: \d+/)) {
+        else if (msg.text.match(/\d+/)) {
             answers.sendPersonalRobot(bot, msg);
         }
         else if (msg.text.includes("ID:")) {
