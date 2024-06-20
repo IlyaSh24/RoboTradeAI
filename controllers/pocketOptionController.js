@@ -1,8 +1,10 @@
 const Trader = require('../models/trader');
 
 const pocketEventReceived = async (req, res) => {
+    console.log('Postback invoked!');
     try {
         const data = req.query;
+        console.log(data);
         if (data) {
             if ('trader_id' in data) {
                 const traderId = data['trader_id'];

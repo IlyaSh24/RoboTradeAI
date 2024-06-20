@@ -10,7 +10,7 @@ require('dotenv').config();
 
 const port = process.env.PORT || 1338;
 
-app.get('/pocketoption', pocketOptionController.pocketEventReceived);
+app.get('/pocket', pocketOptionController.pocketEventReceived);
 app.get('/trader/:id', pocketOptionController.getTrader);
 
 app.listen(port, () => console.log('Server is listening on port: 1338'));
@@ -56,22 +56,22 @@ bot.on('text', async msg => {
         else if (msg.text === '🤖 Get robot') {
             answers.sendPurchaseMethod(bot, msg);
         }
-        else if (msg.text === '💸 Free') {
-            answers.sendFreePurchaseCountry(bot, msg);
+        else if (msg.text === '🤝 Partnership') {
+            answers.sendFreePurchaseSteps(bot, msg);
         }
-        else if (msg.text === "🌎 I'm not from Russia") {
+        /*else if (msg.text === "🌎 I'm not from Russia") {
             answers.sendFreePurchaseNotRussia(bot, msg);
         }
         else if (msg.text === 'Russia') {
             answers.sendFreePurchaseRussia(bot, msg);
-        }
+        }*/
         else if (msg.text === '🔎 Check my profile ID') {
             answers.sendCheckProfileID(bot, msg);
         }
         else if (msg.text === '🔎 Проверить ID профиля') {
             answers.sendCheckProfileIDRussian(bot, msg);
         }
-        else if (msg.text === '💳 Paid') {
+        else if (msg.text === '💳 Fix price') {
             answers.sendPaidPurchaseMethod(bot, msg);
         }
         else if (msg.text === 'Bitcoin') {

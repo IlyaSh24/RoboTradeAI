@@ -26,7 +26,7 @@ const sendPurchaseMethod = async (bot, msg) => {
     await bot.sendMessage(msg.chat.id, '🛒 Choose the method of getting the robot', {
         reply_markup: {
             keyboard: [
-                ['💸 Free', '💳 Paid']
+                ['🤝 Partnership', '💳 Fix price']
             ],
             one_time_keyboard: true
         }
@@ -46,9 +46,9 @@ const sendFreePurchaseCountry = async (bot, msg) => {
     );
 };
 
-const sendFreePurchaseNotRussia = async (bot, msg) => {
+const sendFreePurchaseSteps = async (bot, msg) => {
     await bot.sendMessage(msg.chat.id, 
-        '👇👇👇 Below is step-by-step instruction for getting a robot for free\n\n' +
+        '👇👇👇 Below is step-by-step instruction for getting a robot\n\n' +
         '🔗 1. Register a new account using the link provided below\n' +
         '🔝 2. Top up your account balance minimum at least 50$\n' +
         '✍🏽 3. Copy your ID from profile tab (photo below) and send to our manager <i>@robotradeaioff</i>\n' +
@@ -71,29 +71,32 @@ const sendCheckProfileID = async (bot, msg) => {
     await bot.sendMessage(msg.chat.id, 'Send your profile ID here in the following format: <b>ID: [your profile ID]</b>', {
         parse_mode: 'HTML'
     });
+    sendNavigationMenu(bot, msg);
 };
 
 const sendCheckProfileIDRussian = async (bot, msg) => {
     await bot.sendMessage(msg.chat.id, 'Отправьте в сообщении ваш ID профиля в следующем формате: <b>ID: [ID вашего профиля]</b>', {
         parse_mode: 'HTML'
     });
+    sendNavigationMenu(bot, msg);
 }
 
 const sendProfileIDIncorrectFormat = async (bot, msg) => {
     await bot.sendMessage(msg.chat.id, 'Please, enter your ID in the correct format');
+    sendNavigationMenu(bot, msg);
 };
 
 const sendPersonalRobot = async (bot, msg) => {
     try {
         const profileId = msg.text.match(/\d+/);
         request(`${host}:${port}/trader/${profileId}`, async (err, response, body) => {
-            const traderFound = body.result;
-            console.log(body);
-            if (traderFound) {
+            const jsonResult = JSON.parse(body);
+            if (jsonResult.result) {
                 const robotJsFileContent = fs.readFileSync(__dirname + '/static/extension/robot.js')
                 const robotJsFileContentWithProfileId = robotJsFileContent.toString().replace('#PROFILE_ID_HERE#', profileId);
                 const traderDirPath = __dirname + '/static/traders/' + profileId;
                 if (!fs.existsSync(traderDirPath)) {
+                    console.log("I'm here");
                     fs.mkdirSync(traderDirPath);
                 }
                 fsExtra.copySync(__dirname + '/static/extension', traderDirPath);
@@ -102,21 +105,16 @@ const sendPersonalRobot = async (bot, msg) => {
                 // Compress and create zip file
                 zipper.sync.zip(traderDirPath).compress().save(traderDirPath + `/robot_${profileId}.zip`);
                 await bot.sendDocument(msg.chat.id, `${traderDirPath}/robot_${profileId}.zip`, {
-                    caption: '🔥 You extension is ready. Follow the instruction to install and use it'
+                    caption: '🔥 Our congratulations! Your extension is ready. Follow the instruction to install and use it'
                 });
-                await bot.sendMessage(msg.chat.id, '👇 Learn how to install the extension in the browser ', {
-                    reply_markup: {
-                        keyboard: [
-                            ['⚙️ How to install robot']
-                        ],
-                        one_time_keyboard: true
-                    }
-                });
+                await bot.sendMessage(msg.chat.id, '👇 Learn how to install the extension in the browser ');
+                sendNavigationMenu(bot, msg);
             }
             else {
                 await bot.sendMessage(msg.chat.id, '😕 Your profile ID is not found. If you are sure that you registered <b>correctly</b>, please, contact our manager 👉 <i>@robotradeaioff</i>', {
                     parse_mode: 'HTML'
                 });
+                sendNavigationMenu(bot, msg);
             }
         });
     }
@@ -164,36 +162,39 @@ const sendPaidPurchaseMethod = async (bot, msg) => {
 const sendPaidPurchaseByBitcoin = async (bot, msg) => {
     request('https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD', async (err, response, body) => {
         await bot.sendMessage(msg.chat.id, 
-            `1. Send ${(99 / JSON.parse(body).USD).toFixed(5)} BTC to wallet: <span class="tg-spoiler">bc1q9566wdw6e5s8r7zpkf4mp4uzglejkfhjwwmhdm</span>\n` +
+            `1. Send ${(29 / JSON.parse(body).USD).toFixed(5)} BTC (20$) to wallet: <span class="tg-spoiler">bc1q9566wdw6e5s8r7zpkf4mp4uzglejkfhjwwmhdm</span>\n` +
             '2. Send your wallet to our manager @robotradeaioff. After that, our manager will check the receipt and contact you within <i>~24 hours</i> and will <b>send the robot</b>',
             {
                 parse_mode: 'HTML'
             }
         );
+        sendNavigationMenu(bot, msg);
     });
 }
 
 const sendPaidPurchaseByTether = async (bot, msg) => {
     request('https://min-api.cryptocompare.com/data/price?fsym=USDT&tsyms=USD', async (err, response, body) => {
         await bot.sendMessage(msg.chat.id, 
-            `1. Send ${(99 / JSON.parse(body).USD).toFixed(5)} USDT to wallet: <span class="tg-spoiler">TSVyj9hEx2vjA3CVCC3312erwVoRboGLNw</span>\n` +
+            `1. Send ${(29 / JSON.parse(body).USD).toFixed(5)} USDT to wallet: <span class="tg-spoiler">TSVyj9hEx2vjA3CVCC3312erwVoRboGLNw</span>\n` +
             '2. Send your wallet to our manager @robotradeaioff. After that, our manager will check the receipt and contact you within <i>~24 hours</i> and will <b>send the robot</b>',
             {
                 parse_mode: 'HTML'
             }
         );
+        sendNavigationMenu(bot, msg);
     });
 };
 
 const sendPaidPurchaseByEthereum = async (bot, msg) => {
     request('https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD', async (err, response, body) => {
         await bot.sendMessage(msg.chat.id, 
-            `1. Send ${(99 / JSON.parse(body).USD).toFixed(5)} ETH to wallet: <span class="tg-spoiler">0xA1601DB02B02e441BAcDc3c2763490832f1F2564</span>\n` +
+            `1. Send ${(29 / JSON.parse(body).USD).toFixed(5)} ETH (20$) to wallet: <span class="tg-spoiler">0xA1601DB02B02e441BAcDc3c2763490832f1F2564</span>\n` +
             '2. Send your wallet to our manager @robotradeaioff. After that, our manager will check the receipt and contact you within <i>~24 hours</i> and will <b>send the robot</b>',
             {
                 parse_mode: 'HTML'
             }
         );
+        sendNavigationMenu(bot, msg);
     });
 };
 
@@ -212,6 +213,7 @@ const sendHowToUseRobot = async (bot, msg) => {
             parse_mode: 'HTML'
         }
     );
+    sendNavigationMenu(bot, msg);
 };
 
 const sendHowTheRobotWorks = async (bot, msg) => {
@@ -229,6 +231,7 @@ const sendHowTheRobotWorks = async (bot, msg) => {
             parse_mode: 'HTML'
         }
     );
+    sendNavigationMenu(bot, msg);
 };
 
 const sendHowToInstallRobot = async (bot, msg) => {
@@ -260,6 +263,7 @@ const sendHowToInstallRobot = async (bot, msg) => {
         }
     );
     await bot.sendPhoto(msg.chat.id, './images/installation/ready.png');
+    sendNavigationMenu(bot, msg);
 };
 
 const sendManagerContact = async (bot, msg) => {
@@ -269,6 +273,7 @@ const sendManagerContact = async (bot, msg) => {
             parse_mode: 'HTML'
         }
     );
+    sendNavigationMenu(bot, msg);
 };
 
 module.exports = { 
@@ -276,7 +281,7 @@ module.exports = {
     sendNavigationMenu, 
     sendPurchaseMethod, 
     sendFreePurchaseCountry,
-    sendFreePurchaseNotRussia,
+    sendFreePurchaseSteps,
     sendCheckProfileID,
     sendCheckProfileIDRussian,
     sendProfileIDIncorrectFormat,
