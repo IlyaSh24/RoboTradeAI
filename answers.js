@@ -51,7 +51,7 @@ const sendFreePurchaseSteps = async (bot, msg) => {
         '👇👇👇 Below is step-by-step instruction for getting a robot\n\n' +
         '🔗 1. Register a new account using the link provided below\n' +
         '🔝 2. Top up your account balance minimum at least 50$\n' +
-        '✍🏽 3. Copy your ID from profile tab (photo below) and send to our manager <i>@robotradeaioff</i>\n' +
+        '✍🏽 3. Copy your ID from profile tab (photo below) and send to our manager <i>@robotradeaimanager</i>\n' +
         '🤖 4. Our manager will check compliance with the conditions and send you a robot\n\n' + 
         '👉 Register link: <a href="https://pocket1.click/smart/4jlv8RwNpcPNtF">Go and register</a>\n\n' +
         '💡💡💡 <i>Advice: We highly recommend to top up your account with <b>200$</b></i>', {
@@ -111,7 +111,7 @@ const sendPersonalRobot = async (bot, msg) => {
                 sendNavigationMenu(bot, msg);
             }
             else {
-                await bot.sendMessage(msg.chat.id, '😕 Your profile ID is not found. If you are sure that you registered <b>correctly</b>, please, contact our manager 👉 <i>@robotradeaioff</i>', {
+                await bot.sendMessage(msg.chat.id, '😕 Your profile ID is not found. If you are sure that you registered <b>correctly</b>, please, contact our manager 👉 <i>@robotradeaimanager</i>', {
                     parse_mode: 'HTML'
                 });
                 sendNavigationMenu(bot, msg);
@@ -130,7 +130,7 @@ const sendFreePurchaseRussia = async (bot, msg) => {
         '👇👇👇 Ниже описана пошаговая инструкция по бесплатному приобретению робота\n\n' +
         '🔗 1. Зарегистрируйте новый аккаунт по ссылке ниже\n' +
         '🔝 2. Пополните депозит на сумму от 50$\n' +
-        '✍🏽 3. Скопируйте свой ID профиля (фото представлено ниже) и отправьте нашему менеджеру <i>@robotradeaioff</i>\n' +
+        '✍🏽 3. Скопируйте свой ID профиля (фото представлено ниже) и отправьте нашему менеджеру <i>@robotradeaimanager</i>\n' +
         '🤖 4. Наш менеджер проверит соблюдение условий и отправит Вам робота\n\n' + 
         '👉 Ссылка для регистрации: <a href="https://po-ru.click/smart/4jlv8RwNpcPNtF">Перейти и зарегистрироваться</a>\n\n' +
         '💡💡💡 <i>Совет: Мы настоятельно рекомендуем пополнять аккаунт на сумму от <b>200$</b></i>', {
@@ -163,7 +163,7 @@ const sendPaidPurchaseByBitcoin = async (bot, msg) => {
     request('https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD', async (err, response, body) => {
         await bot.sendMessage(msg.chat.id, 
             `1. Send ${(29 / JSON.parse(body).USD).toFixed(5)} BTC (20$) to wallet: <span class="tg-spoiler">bc1q9566wdw6e5s8r7zpkf4mp4uzglejkfhjwwmhdm</span>\n` +
-            '2. Send your wallet to our manager @robotradeaioff. After that, our manager will check the receipt and contact you within <i>~24 hours</i> and will <b>send the robot</b>',
+            '2. Send your wallet to our manager @robotradeaimanager. After that, our manager will check the receipt and contact you within <i>~24 hours</i> and will <b>send the robot</b>',
             {
                 parse_mode: 'HTML'
             }
@@ -176,7 +176,7 @@ const sendPaidPurchaseByTether = async (bot, msg) => {
     request('https://min-api.cryptocompare.com/data/price?fsym=USDT&tsyms=USD', async (err, response, body) => {
         await bot.sendMessage(msg.chat.id, 
             `1. Send ${(29 / JSON.parse(body).USD).toFixed(5)} USDT to wallet: <span class="tg-spoiler">TSVyj9hEx2vjA3CVCC3312erwVoRboGLNw</span>\n` +
-            '2. Send your wallet to our manager @robotradeaioff. After that, our manager will check the receipt and contact you within <i>~24 hours</i> and will <b>send the robot</b>',
+            '2. Send your wallet to our manager @robotradeaimanager. After that, our manager will check the receipt and contact you within <i>~24 hours</i> and will <b>send the robot</b>',
             {
                 parse_mode: 'HTML'
             }
@@ -189,7 +189,7 @@ const sendPaidPurchaseByEthereum = async (bot, msg) => {
     request('https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD', async (err, response, body) => {
         await bot.sendMessage(msg.chat.id, 
             `1. Send ${(29 / JSON.parse(body).USD).toFixed(5)} ETH (20$) to wallet: <span class="tg-spoiler">0xA1601DB02B02e441BAcDc3c2763490832f1F2564</span>\n` +
-            '2. Send your wallet to our manager @robotradeaioff. After that, our manager will check the receipt and contact you within <i>~24 hours</i> and will <b>send the robot</b>',
+            '2. Send your wallet to our manager @robotradeaimanager. After that, our manager will check the receipt and contact you within <i>~24 hours</i> and will <b>send the robot</b>',
             {
                 parse_mode: 'HTML'
             }
@@ -268,7 +268,7 @@ const sendHowToInstallRobot = async (bot, msg) => {
 
 const sendManagerContact = async (bot, msg) => {
     await bot.sendMessage(msg.chat.id, 
-        "❓ If you have any questions that wasn't covered by bot, please contact our manager 👉 <i>@robotradeaioff</i>",
+        "❓ If you have any questions that wasn't covered by bot, please contact our manager 👉 <i>@robotradeaimanager</i>",
         {
             parse_mode: 'HTML'
         }
