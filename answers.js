@@ -51,8 +51,8 @@ const sendFreePurchaseSteps = async (bot, msg) => {
         '👇👇👇 Below is step-by-step instruction for getting a robot\n\n' +
         '🔗 1. Register a new account using the link provided below\n' +
         '🔝 2. Top up your account balance minimum at least 50$\n' +
-        '✍🏽 3. Copy your ID from profile tab (photo below) and send to our manager <i>@robotradeaimanager</i>\n' +
-        '🤖 4. Our manager will check compliance with the conditions and send you a robot\n\n' + 
+        '✍🏽 3. Copy your ID from profile tab (photo below) and send to robot in message field\n' +
+        '🤖 4. If your profile is registered correctly, the robot generates the extension for you\n\n' + 
         '👉 Register link: <a href="https://pocket1.click/smart/4jlv8RwNpcPNtF">Go and register</a>\n\n' +
         '💡💡💡 <i>Advice: We highly recommend to top up your account with <b>200$</b></i>', {
             parse_mode: 'HTML',
