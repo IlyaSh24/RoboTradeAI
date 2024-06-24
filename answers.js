@@ -162,7 +162,7 @@ const sendPaidPurchaseMethod = async (bot, msg) => {
 const sendPaidPurchaseByBitcoin = async (bot, msg) => {
     request('https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD', async (err, response, body) => {
         await bot.sendMessage(msg.chat.id, 
-            `1. Send ${(29 / JSON.parse(body).USD).toFixed(5)} BTC (20$) to wallet: <span class="tg-spoiler">bc1q9566wdw6e5s8r7zpkf4mp4uzglejkfhjwwmhdm</span>\n` +
+            `1. Send ${(29 / JSON.parse(body).USD).toFixed(5)} BTC (29$) to wallet: <span class="tg-spoiler">bc1q9566wdw6e5s8r7zpkf4mp4uzglejkfhjwwmhdm</span>\n` +
             '2. Send your wallet to our manager @robotradeaimanager. After that, our manager will check the receipt and contact you within <i>~24 hours</i> and will <b>send the robot</b>',
             {
                 parse_mode: 'HTML'
@@ -188,7 +188,7 @@ const sendPaidPurchaseByTether = async (bot, msg) => {
 const sendPaidPurchaseByEthereum = async (bot, msg) => {
     request('https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD', async (err, response, body) => {
         await bot.sendMessage(msg.chat.id, 
-            `1. Send ${(29 / JSON.parse(body).USD).toFixed(5)} ETH (20$) to wallet: <span class="tg-spoiler">0xA1601DB02B02e441BAcDc3c2763490832f1F2564</span>\n` +
+            `1. Send ${(29 / JSON.parse(body).USD).toFixed(5)} ETH (29$) to wallet: <span class="tg-spoiler">0xA1601DB02B02e441BAcDc3c2763490832f1F2564</span>\n` +
             '2. Send your wallet to our manager @robotradeaimanager. After that, our manager will check the receipt and contact you within <i>~24 hours</i> and will <b>send the robot</b>',
             {
                 parse_mode: 'HTML'
