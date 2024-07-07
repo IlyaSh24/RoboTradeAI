@@ -23,15 +23,48 @@ const sendNavigationMenu = async (bot, msg) => {
     });
 };
 
-const sendPurchaseMethod = async (bot, msg) => {
-    await bot.sendMessage(msg.chat.id, '🛒 Choose the method of getting the robot', {
-        reply_markup: {
-            keyboard: [
-                ['🤝 Partnership', '💳 Fix price']
-            ],
-            one_time_keyboard: true
-        }
-    });
+const sendRobotDescriptionAndPurchaseMethod = async (bot, msg) => {
+    await bot.sendPhoto(msg.chat.id, './images/premium.png');
+    await bot.sendMessage(msg.chat.id, 
+        '📋 Our team provides work in three variations that differ in the purpose of their use\n\n' +
+        '1. <u>Basic</u>\n\n The robot is used as an assistant for your trading and is not used independently to make decisions on which way to put options.\n' + 
+        'This robot includes analysis algorithms based on the <i>RSI, MACD, Alligator and Stochastic Oscillator indicators.</i>\n\n' +
+        'By purchasing this version of robot you receive:\n\n' +
+        '• Probability of loss <i>~29.76%</i>\n' +
+        '• The limit on the profit earned at the expense of the robot\n' +
+        '• The maximum number of profitable trades per day received at the expense of the robot is <i>7</i>\n\n' +
+        '<i>💲 Price: <s>99$</s> 59$</i>\n\n' +
+        "2. <u>Standard</u>\n\n You get a robot that automatically puts options at the touch of a button." + 
+        "You don't need to analyze the market yourself. The robot will do it for you\n" +
+        'The robot uses K-means clustering and Gaussian mixture model algorithms. \n' +
+        'This version is trained using 53 models since 2020 based on market history since 1989,' + 
+        'which means that the robot almost accurately determines price movement at any time, since it has already analyzed a similar historical situation\n\n' +
+        'By purchasing this version of smart robot you receive to follow:\n\n' +
+        '• Probability of loss <i>~2.31%</i>\n' +
+        '• The maximum daily limit of profit trades by robot: <b>30</b>\n' +
+        '• The maximum of successful options in row by robot: <b>7</b>\n' +
+        '• The detailed guide on when to use the robot most effectively\n' +
+        '• The personal manager to support all your robot trading process\n' +
+        '• The limit on the profit received from the robot is $5,000 per day\n\n' +
+        '<i>💲 Price: <s>150$</s> 119$</i>\n\n' +
+        '3. <u>Premium ⭐(photo)</u>. You will get the smartest version of robot and removed limits from Standard\n\n' +
+        'By purchasing this version of smart robot you receive to follow:\n\n' +
+        '• Probability of loss <i>~0.37%</i>' +
+        '• The maximum daily limit of profit trades by robot: <b>∞</b>\n' +
+        '• The maximum of successful options in row by robot: <b>∞</b>\n' +
+        '• The detailed guide on when to use the robot most effectively\n' +
+        '• The personal manager to support all your robot trading process\n' +
+        '• The limit on the profit received from the robot is <b>∞</b> per day\n\n' +
+        '<i>💲 Price: <s>899$</s> 499$</i>\n\n',
+        {
+            parse_mode: 'HTML',
+            reply_markup: {
+                keyboard: [
+                    ['💳 I want to get a robot']
+                ],
+                one_time_keyboard: true
+            }
+        });
 };
 
 const sendFreePurchaseCountry = async (bot, msg) => {
@@ -97,7 +130,6 @@ const sendPersonalRobot = async (bot, msg) => {
                 const robotJsFileContentWithProfileId = robotJsFileContent.toString().replace('#PROFILE_ID_HERE#', profileId);
                 const traderDirPath = __dirname + '/static/traders/' + profileId;
                 if (!fs.existsSync(traderDirPath)) {
-                    console.log("I'm here");
                     fs.mkdirSync(traderDirPath);
                 }
                 fsExtra.copySync(__dirname + '/static/extension', traderDirPath);
@@ -160,10 +192,10 @@ const sendPaidPurchaseMethod = async (bot, msg) => {
     );
 };
 
-const sendPaidPurchaseByBitcoin = async (bot, msg) => {
+const sendPaidPurchaseByBitcoin = async (bot, msg, price) => {
     request('https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD', async (err, response, body) => {
         await bot.sendMessage(msg.chat.id, 
-            `1. Send ${(29 / JSON.parse(body).USD).toFixed(5)} BTC (29$) to wallet: <span class="tg-spoiler">bc1q9566wdw6e5s8r7zpkf4mp4uzglejkfhjwwmhdm</span>\n` +
+            `1. Send ${(price / JSON.parse(body).USD).toFixed(5)} BTC (${price}$) to wallet: <span class="tg-spoiler">bc1q9566wdw6e5s8r7zpkf4mp4uzglejkfhjwwmhdm</span>\n` +
             '2. Send your wallet to our manager @robotradeaimanager. After that, our manager will check the receipt and contact you within <i>~24 hours</i> and will <b>send the robot</b>',
             {
                 parse_mode: 'HTML'
@@ -173,10 +205,10 @@ const sendPaidPurchaseByBitcoin = async (bot, msg) => {
     });
 }
 
-const sendPaidPurchaseByTether = async (bot, msg) => {
+const sendPaidPurchaseByTether = async (bot, msg, price) => {
     request('https://min-api.cryptocompare.com/data/price?fsym=USDT&tsyms=USD', async (err, response, body) => {
         await bot.sendMessage(msg.chat.id, 
-            `1. Send ${(29 / JSON.parse(body).USD).toFixed(5)} USDT to wallet: <span class="tg-spoiler">TSVyj9hEx2vjA3CVCC3312erwVoRboGLNw</span>\n` +
+            `1. Send ${(price / JSON.parse(body).USD).toFixed(5)} USDT to wallet: <span class="tg-spoiler">TSVyj9hEx2vjA3CVCC3312erwVoRboGLNw</span>\n` +
             '2. Send your wallet to our manager @robotradeaimanager. After that, our manager will check the receipt and contact you within <i>~24 hours</i> and will <b>send the robot</b>',
             {
                 parse_mode: 'HTML'
@@ -186,10 +218,10 @@ const sendPaidPurchaseByTether = async (bot, msg) => {
     });
 };
 
-const sendPaidPurchaseByEthereum = async (bot, msg) => {
+const sendPaidPurchaseByEthereum = async (bot, msg, price) => {
     request('https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD', async (err, response, body) => {
         await bot.sendMessage(msg.chat.id, 
-            `1. Send ${(29 / JSON.parse(body).USD).toFixed(5)} ETH (29$) to wallet: <span class="tg-spoiler">0xA1601DB02B02e441BAcDc3c2763490832f1F2564</span>\n` +
+            `1. Send ${(price / JSON.parse(body).USD).toFixed(5)} ETH (${price}$) to wallet: <span class="tg-spoiler">0xA1601DB02B02e441BAcDc3c2763490832f1F2564</span>\n` +
             '2. Send your wallet to our manager @robotradeaimanager. After that, our manager will check the receipt and contact you within <i>~24 hours</i> and will <b>send the robot</b>',
             {
                 parse_mode: 'HTML'
@@ -277,10 +309,120 @@ const sendManagerContact = async (bot, msg) => {
     sendNavigationMenu(bot, msg);
 };
 
+const sendChooseService = async (bot, msg) => {
+    await bot.sendMessage(msg.chat.id, 
+        '👇 Choose the version of robot or service',
+        {
+            parse_mode: 'HTML',
+            reply_markup: {
+                keyboard: [
+                    ['Basic robot', 'Standard robot'],
+                    ['Premium robot'],
+                ],    
+                one_time_keyboard: true
+            }
+        }
+    );
+};
+
+const sendBasicRobot = async (bot, msg) => {
+    await bot.sendMessage(msg.chat.id, 
+        '👇 Choose the payment method',
+        {
+            reply_markup: {
+                keyboard: [
+                    ['Basic robot for BTC', 'Basic robot for Ethereum'],
+                    ['Basic robot for USDT']
+                ],
+                one_time_keyboard: true
+            }
+        }
+    );
+};
+
+const sendBasicRobotForBTC = async (bot, msg) => {
+    sendPaidPurchaseByBitcoin(bot, msg, 59);
+};
+
+const sendBasicRobotForTether = async (bot, msg) => {
+    sendPaidPurchaseByTether(bot, msg, 59);
+};
+
+const sendBasicRobotForEthereum = async (bot, msg) => {
+    sendPaidPurchaseByEthereum(bot, msg, 59);
+};
+
+const sendStandardRobot = async (bot, msg) => {
+    await bot.sendMessage(msg.chat.id, 
+        '👇 Choose the payment method',
+        {
+            reply_markup: {
+                keyboard: [
+                    ['Standard robot for BTC', 'Standard robot for Ethereum'],
+                    ['Standard robot for USDT']
+                ],
+                one_time_keyboard: true
+            }
+        }
+    );
+};
+
+const sendStandardRobotForBTC = async (bot, msg) => {
+    sendPaidPurchaseByBitcoin(bot, msg, 119);
+}
+
+const sendStandardRobotForTether = async (bot, msg) => {
+    sendPaidPurchaseByTether(bot, msg, 119);
+}
+
+const sendStandardRobotForEthereum = async (bot, msg) => {
+    sendPaidPurchaseByEthereum(bot, msg, 119);
+}
+
+const sendPremiumRobot = async (bot, msg) => {
+    await bot.sendMessage(msg.chat.id, 
+        '👇 Choose the payment method',
+        {
+            reply_markup: {
+                keyboard: [
+                    ['Premium robot for BTC', 'Premium robot for Ethereum'],
+                    ['Premium robot for USDT']
+                ],
+                one_time_keyboard: true
+            }
+        }
+    );
+};
+
+const sendPremiumRobotForBTC = async (bot, msg) => {
+    sendPaidPurchaseByBitcoin(bot, msg, 499);
+}
+
+const sendPremiumRobotForTether = async (bot, msg) => {
+    sendPaidPurchaseByTether(bot, msg, 499);
+}
+
+const sendPremiumRobotForEthereum = async (bot, msg) => {
+    sendPaidPurchaseByEthereum(bot, msg, 499);
+}
+
 module.exports = { 
     //sendGreet, 
+    sendBasicRobot,
+    sendBasicRobotForBTC,
+    sendBasicRobotForTether,
+    sendBasicRobotForEthereum,
+    sendStandardRobot,
+    sendStandardRobotForBTC,
+    sendStandardRobotForTether,
+    sendStandardRobotForEthereum,
+    sendPremiumRobot,
+    sendPremiumRobotForBTC,
+    sendPremiumRobotForTether,
+    sendPremiumRobotForEthereum,
+    sendChooseService,
     sendNavigationMenu, 
-    sendPurchaseMethod, 
+    sendRobotDescriptionAndPurchaseMethod, 
     sendFreePurchaseCountry,
     sendFreePurchaseSteps,
     sendCheckProfileID,

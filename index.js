@@ -8,12 +8,12 @@ const pocketOptionController = require('./controllers/pocketOptionController');
 const sequelize = require('./models/config');
 require('dotenv').config();
 
-const port = process.env.PORT || 1338;
+const PORT = process.env.PORT;
 
 app.get('/pocket', pocketOptionController.pocketEventReceived);
 app.get('/trader/:id', pocketOptionController.getTrader);
 
-app.listen(port, () => console.log('Server is listening on port: 1338'));
+app.listen(PORT, () => console.log(`Server is listening on port: ${PORT}`));
 
 sequelize.sync()
     .then(result => {
@@ -47,24 +47,63 @@ bot.on('text', async msg => {
         else if (msg.text === '/contact') {
             answers.sendManagerContact(bot, msg);
         }
-        else if (msg.text.match(/\d+/)) {
+        /*else if (msg.text.match(/\d+/)) {
             answers.sendPersonalRobot(bot, msg);
         }
         else if (msg.text.includes("ID:")) {
             answers.sendProfileIDIncorrectFormat(bot, msg);
-        }
+        }*/
         else if (msg.text === '🤖 Get robot') {
-            answers.sendPurchaseMethod(bot, msg);
+            answers.sendRobotDescriptionAndPurchaseMethod(bot, msg);
         }
-        else if (msg.text === '🤝 Partnership') {
+        /*else if (msg.text === '🤝 Partnership') {
             answers.sendFreePurchaseSteps(bot, msg);
-        }
+        }*/
         /*else if (msg.text === "🌎 I'm not from Russia") {
             answers.sendFreePurchaseNotRussia(bot, msg);
         }
         else if (msg.text === 'Russia') {
             answers.sendFreePurchaseRussia(bot, msg);
         }*/
+        else if (msg.text === '💳 I want to get a robot') {
+            answers.sendChooseService(bot, msg);
+        }
+        else if (msg.text === 'Basic robot') {
+            answers.sendBasicRobot(bot, msg);
+        }
+        else if (msg.text === 'Basic robot for BTC') {
+            answers.sendBasicRobotForBTC(bot, msg);
+        }
+        else if (msg.text === 'Basic robot for USDT') {
+            answers.sendBasicRobotForTether(bot, msg);
+        }
+        else if (msg.text === 'Basic robot for Ethereum') {
+            answers.sendBasicRobotForEthereum(bot, msg);
+        }
+        else if (msg.text === 'Standard robot') {
+            answers.sendStandardRobot(bot, msg);
+        }
+        else if (msg.text === 'Standard robot for BTC') {
+            answers.sendStandardRobotForBTC(bot, msg);
+        }
+        else if (msg.text === 'Standard robot for USDT') {
+            answers.sendStandardRobotForTether(bot, msg);
+        }
+        else if (msg.text === 'Standard robot for Ethereum') {
+            answers.sendStandardRobotForEthereum(bot, msg);
+        }
+        else if (msg.text === 'Premium robot') {
+            answers.sendPremiumRobot(bot, msg);
+        }
+        else if (msg.text === 'Premium robot for BTC') {
+            answers.sendPremiumRobotForBTC(bot, msg);
+        }
+        else if (msg.text === 'Premium robot for USDT') {
+            answers.sendPremiumRobotForTether(bot, msg);
+        }
+        else if (msg.text === 'Premium robot for Ethereum') {
+            answers.sendPremiumRobotForEthereum(bot, msg);
+        }
         else if (msg.text === '🔎 Check my profile ID') {
             answers.sendCheckProfileID(bot, msg);
         }

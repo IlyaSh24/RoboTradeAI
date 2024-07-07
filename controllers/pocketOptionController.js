@@ -1,7 +1,6 @@
 const Trader = require('../models/trader');
 
 const pocketEventReceived = async (req, res) => {
-    console.log('Postback invoked!');
     try {
         const data = req.query;
         console.log(data);
