@@ -2,9 +2,10 @@ const request = require('request');
 const fs = require('fs');
 const fsExtra = require('fs-extra');
 const zipper = require('zip-local');
+require('dotenv').config();
 
-const host = process.env.HOST || 'http://195.2.74.29';
-const port = process.env.PORT || 1338;
+const HOST = process.env.HOST;
+const PORT = process.env.PORT;
 
 // const sendGreet = async (bot, msg) => {
 //     await bot.sendMessage(msg.chat.id, `Hello, ${msg.from.first_name}`);
@@ -89,7 +90,7 @@ const sendProfileIDIncorrectFormat = async (bot, msg) => {
 const sendPersonalRobot = async (bot, msg) => {
     try {
         const profileId = msg.text.match(/\d+/);
-        request(`${host}:${port}/trader/${profileId}`, async (err, response, body) => {
+        request(`${HOST}:${PORT}/trader/${profileId}`, async (err, response, body) => {
             const jsonResult = JSON.parse(body);
             if (jsonResult.result) {
                 const robotJsFileContent = fs.readFileSync(__dirname + '/static/extension/robot.js')
