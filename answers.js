@@ -55,7 +55,8 @@ const sendRobotDescriptionAndPurchaseMethod = async (bot, msg) => {
         '• The detailed guide on when to use the robot most effectively\n' +
         '• The personal manager to support all your robot trading process\n' +
         '• The limit on the profit received from the robot is <b>∞</b> per day\n\n' +
-        '<i>💲 Price: <s>899$</s> 499$</i>\n\n',
+        '<i>💲 Price: <s>899$</s> 499$</i>\n\n' +
+        '👉 If you have any questions you can ask it here: <i>@robotradeaimanager</i>',
         {
             parse_mode: 'HTML',
             reply_markup: {
