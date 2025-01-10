@@ -105,7 +105,7 @@ const sendPersonalRobot = async (bot, msg) => {
         request(`${HOST}:${PORT}/trader/${profileId}`, async (err, response, body) => {
             const jsonResult = JSON.parse(body);
             if (jsonResult.result) {
-                const robotJsFileContent = fs.readFileSync(__dirname + '/static/extension/robot.js')
+                const robotJsFileContent = fs.readFileSync(__dirname + '/static/extension/content.js')
                 const robotJsFileContentWithProfileId = robotJsFileContent.toString().replace('#PROFILE_ID_HERE#', profileId);
                 const traderDirPath = __dirname + '/static/traders/' + profileId;
                 if (!fs.existsSync(traderDirPath)) {
@@ -123,7 +123,7 @@ const sendPersonalRobot = async (bot, msg) => {
                 sendNavigationMenu(bot, msg);
             }
             else {
-                await bot.sendMessage(msg.chat.id, '😕 Your profile ID is not found. If you are sure that you registered <b>correctly</b>, please, contact our manager 👉 <i>@robotradeaimanager</i>', {
+                await bot.sendMessage(msg.chat.id, '😕 Your profile ID is not found. If you are sure that you registered <b>correctly</b>, please, contact our manager 👉 <i>@gpttradingmanager</i>', {
                     parse_mode: 'HTML'
                 });
                 sendNavigationMenu(bot, msg);
@@ -162,8 +162,7 @@ const sendPaidPurchaseMethod = async (bot, msg) => {
         '💳 Сhoose the preferred method', {
             reply_markup: {
                 keyboard: [
-                    ['Bitcoin', 'USDT'],
-                    ['Ethereum']
+                    ['USDT']
                 ],    
                 one_time_keyboard: true
             }
@@ -175,7 +174,7 @@ const sendPaidPurchaseByBitcoin = async (bot, msg, price) => {
     request('https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD', async (err, response, body) => {
         await bot.sendMessage(msg.chat.id, 
             `1. Send ${(price / JSON.parse(body).USD).toFixed(5)} BTC (${price}$) to wallet: <span class="tg-spoiler">bc1q9566wdw6e5s8r7zpkf4mp4uzglejkfhjwwmhdm</span>\n` +
-            '2. Send your wallet to our manager @robotradeaimanager. After that, our manager will check the receipt and contact you within <i>~24 hours</i> and will <b>send the robot</b>',
+            '2. Send your wallet to our manager @gpttradingmanager. After that, our manager will check the receipt and contact you within <i>~24 hours</i> and will <b>send the robot</b>',
             {
                 parse_mode: 'HTML'
             }
@@ -185,23 +184,21 @@ const sendPaidPurchaseByBitcoin = async (bot, msg, price) => {
 }
 
 const sendPaidPurchaseByTether = async (bot, msg, price) => {
-    request('https://min-api.cryptocompare.com/data/price?fsym=USDT&tsyms=USD', async (err, response, body) => {
-        await bot.sendMessage(msg.chat.id, 
-            `1. Send ${(price / JSON.parse(body).USD).toFixed(5)} USDT to wallet: <span class="tg-spoiler">TSVyj9hEx2vjA3CVCC3312erwVoRboGLNw</span>\n` +
-            '2. Send your wallet to our manager @robotradeaimanager. After that, our manager will check the receipt and contact you within <i>~24 hours</i> and will <b>send the robot</b>',
-            {
-                parse_mode: 'HTML'
-            }
-        );
-        sendNavigationMenu(bot, msg);
-    });
+    await bot.sendMessage(msg.chat.id, 
+        `1. Send 59 USDT to wallet: <span class="tg-spoiler">TSVyj9hEx2vjA3CVCC3312erwVoRboGLNw</span>\n` +
+        '2. Send your wallet to our manager @gpttradingmanager. After that, our manager will check the receipt and contact you within <i>~24 hours</i> and will <b>send the robot</b>',
+        {
+            parse_mode: 'HTML'
+        }
+    );
+    sendNavigationMenu(bot, msg);
 };
 
 const sendPaidPurchaseByEthereum = async (bot, msg, price) => {
     request('https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD', async (err, response, body) => {
         await bot.sendMessage(msg.chat.id, 
             `1. Send ${(price / JSON.parse(body).USD).toFixed(5)} ETH (${price}$) to wallet: <span class="tg-spoiler">0xA1601DB02B02e441BAcDc3c2763490832f1F2564</span>\n` +
-            '2. Send your wallet to our manager @robotradeaimanager. After that, our manager will check the receipt and contact you within <i>~24 hours</i> and will <b>send the robot</b>',
+            '2. Send your wallet to our manager @gpttradingmanager. After that, our manager will check the receipt and contact you within <i>~24 hours</i> and will <b>send the robot</b>',
             {
                 parse_mode: 'HTML'
             }
@@ -273,7 +270,7 @@ const sendHowToInstallRobot = async (bot, msg) => {
 
 const sendManagerContact = async (bot, msg) => {
     await bot.sendMessage(msg.chat.id, 
-        "❓ If you have any questions that wasn't covered by bot, please contact our manager 👉 <i>@robotradeaimanager</i>",
+        "❓ If you have any questions that wasn't covered by bot, please contact our manager 👉 <i>@gpttradingmanager</i>",
         {
             parse_mode: 'HTML'
         }
