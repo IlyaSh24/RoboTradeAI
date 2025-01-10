@@ -21,7 +21,7 @@ sequelize.sync()
     })
     .catch(err => console.log(`Error sync: ${err}`));
 
-const bot = new TelegramBot(process.env.API_KEY, {
+const bot = new TelegramBot(process.env.API_GPT_TRADING, {
     polling: true
 });
 
@@ -47,26 +47,8 @@ bot.on('text', async msg => {
         else if (msg.text === '/contact') {
             answers.sendManagerContact(bot, msg);
         }
-        /*else if (msg.text.match(/\d+/)) {
-            answers.sendPersonalRobot(bot, msg);
-        }
-        else if (msg.text.includes("ID:")) {
-            answers.sendProfileIDIncorrectFormat(bot, msg);
-        }*/
-        else if (msg.text === '🤖 Get robot') {
+        else if (msg.text === '֎🤖 Get robot') {
             answers.sendRobotDescriptionAndPurchaseMethod(bot, msg);
-        }
-        /*else if (msg.text === '🤝 Partnership') {
-            answers.sendFreePurchaseSteps(bot, msg);
-        }*/
-        /*else if (msg.text === "🌎 I'm not from Russia") {
-            answers.sendFreePurchaseNotRussia(bot, msg);
-        }
-        else if (msg.text === 'Russia') {
-            answers.sendFreePurchaseRussia(bot, msg);
-        }*/
-        else if (msg.text === '💳 I want to get a robot') {
-            answers.sendChooseService(bot, msg);
         }
         else if (msg.text === 'Basic robot') {
             answers.sendBasicRobot(bot, msg);
@@ -113,6 +95,9 @@ bot.on('text', async msg => {
         else if (msg.text === '💳 Fix price') {
             answers.sendPaidPurchaseMethod(bot, msg);
         }
+        else if (msg.text === '🆓 Free') {
+            answers.sendFreePurchaseSteps(bot, msg);
+        }
         else if (msg.text === 'Bitcoin') {
             answers.sendPaidPurchaseByBitcoin(bot, msg);
         } 
@@ -122,14 +107,17 @@ bot.on('text', async msg => {
         else if (msg.text === 'Ethereum') {
             answers.sendPaidPurchaseByEthereum(bot, msg);
         }
-        else if (msg.text === '📝 How to use') {
+        else if (msg.text === '📝 How to use extension') {
             answers.sendHowToUseRobot(bot, msg);
         }
         else if (msg.text === '🧠 How the robot works') {
             answers.sendHowTheRobotWorks(bot, msg);
         }
-        else if (msg.text === '⚙️ How to install robot') {
+        else if (msg.text === '⚙️ How to install GPT Extension') {
             answers.sendHowToInstallRobot(bot, msg);
+        }
+        else if (msg.text.match(/\d+/)) {
+            answers.sendPersonalRobot(bot, msg);
         }
     }
     catch (err) {

